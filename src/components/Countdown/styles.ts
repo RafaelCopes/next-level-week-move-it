@@ -1,4 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+interface ButtonProps {
+  isActive?: Number;
+}
 
 export const CountdownClock = styled.div`
   display: flex;
@@ -40,7 +44,7 @@ export const CountdownClock = styled.div`
   }
 `;
 
-export const CountdownButton = styled.button`
+export const CountdownButton = styled.button<ButtonProps>`
   width: 100%;
   height: 5rem;
 
@@ -53,15 +57,31 @@ export const CountdownButton = styled.button`
   border: 0;
   border-radius: 5px;
 
-  background: var(--blue);
-  color: var(--white);
-
   font-size: 1.24rem;
   font-weight: 600;
 
   transition: background-color 0.2s;
 
-  &:hover {
-    background: var(--blue-dark)
+  ${props => props.isActive ? css`
+    background: var(--white);
+    color: var(--title);
+
+    &:not(:disabled):hover {
+      background: var(--red);
+      color: var(--white);
+    }
+  ` : css`
+    background: var(--blue);
+    color: var(--white);
+
+    &:not(:disabled):hover {
+      background: var(--blue-dark)
+    }
+  `}
+
+  &:disabled {
+    background: var(--white);
+    color: var(--text);
+    cursor: not-allowed;
   }
 `;
